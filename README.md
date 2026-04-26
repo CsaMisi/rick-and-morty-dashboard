@@ -1,59 +1,45 @@
-# GenesysHwAssignment
+# Rick & Morty Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+A modern, responsive web application built to explore the [Rick and Morty API](https://rickandmortyapi.com/). This project demonstrates modern Angular development practices using Angular v21+, Standalone Components, Signals, and Server-Side Rendering (SSR).
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Framework**: Angular 21 
+- **Styling**: Bootstrap 5 & SCSS 
+- **State Management**: Angular Signals & RxJS
 
-```bash
-ng serve
-```
+##  Getting Started
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Prerequisites
 
-## Code scaffolding
+- Node.js (v18.13.0 or newer recommended)
+- npm 
+- Angular CLI version 21.2.8 or newer
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Installation
 
-```bash
-ng generate component component-name
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/CsaMisi/rick-and-morty-dashboard.git
+   cd rick-and-morty-dashboard
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```bash
-ng generate --help
-```
+### Development Server
 
-## Building
+Run `npm start` or `ng serve` for a dev server. 
 
-To build the project run:
+##  Development Notes
 
-```bash
-ng build
-```
+### TODO
+- **Testing:** Using either Vitest or Karma with Jasmine, unit and integration tests should be written, on at least the component leve, and for the services. UI tests with Selenium could be considered, but at this scale, there isnt really much UI to be tested with such a resource heavy tool.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Extra branch
+Theres a feature/sidebar-localstorage named branch, that contains some extras I've toyed around with during development. On the topic of branches you might see direct commits to release and master. In a prod setting i would not do that, and even if the policies were bad enough to let me do that, they would be reverted immedialty.
+  
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
