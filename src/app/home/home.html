@@ -1,14 +1,44 @@
-<div class="flex-grow-1 overflow-auto">
-    <main class="flex-grow-1 d-flex flex-column overflow-hidden h-100">
-    <!-- Top Navbar for Mobile Toggle -->
-    <nav class="navbar navbar-dark bg-card border-bottom border-secondary d-md-none px-3 shadow-sm">
-      <button class="navbar-toggler border-0" type="button"> <!-- TODO: sidebar toggle  -->
-        <span class="navbar-toggler-icon"></span>
+<div class="flex-grow-1 overflow-auto">  
+    <aside class="bg-card border-end border-secondary d-none d-md-flex flex-column transition-all">
+    <div class="p-3 d-flex align-items-center">
+      <h5 class="m-0 text-primary fw-bold text-truncate">Rick & Morty</h5>
+      <button class="btn btn-sm btn-outline-secondary border-0 text-light">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
-    </nav>
-
-    <div class="flex-grow-1 overflow-auto">
-      <router-outlet></router-outlet>
     </div>
-  </main>
+    <hr class="border-secondary m-0">
+    <ul class="nav nav-pills flex-column mb-auto p-3 gap-2">
+      <li class="nav-item">
+        <a routerLink="/" class="nav-link text-light d-flex align-items-center gap-3" 
+           routerLinkActive="bg-primary text-dark fw-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+    
+    <main class="flex-grow-1 d-flex flex-column overflow-hidden h-100">
+        <!-- Top Navbar for Mobile Toggle -->
+        <nav class="navbar navbar-dark bg-card border-bottom border-secondary d-md-none px-3 shadow-sm">
+          <button class="navbar-toggler border-0" type="button"> <!-- TODO: sidebar toggle  -->
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </nav>
+        
+        <div class="min-vh-100 p-4 p-md-5">
+            <div class="container-fluid max-w-7xl mx-auto">
+                <h1 class="mb-4 text-center">Rick and Morty Character Database</h1> 
+                
+                <div class="flex-grow-1 overflow-auto">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
