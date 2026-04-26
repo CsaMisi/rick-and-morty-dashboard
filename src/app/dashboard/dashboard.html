@@ -1,77 +1,132 @@
 <div class="dashboard-wrapper">
-            <h1 class="mb-4 text-center">Character Dashboard</h1>
-    <div class="container-fluid dashboard-container">
-        
-        <div class="input-group search-group">
-          <span class="input-group-text search-icon" id="search-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-          <input 
-            type="text" 
-            class="form-control search-input text-dark" 
-            placeholder="Search characters..." 
-            [value]="SearchTerm()"
-            (input)="OnSearch($event)"
-            aria-describedby="search-icon">
-        </div>
-
-        @if (Loading()) {
-        <div class="loader-wrapper">
-          <div class="spinner-border loader-spinner" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-        }
-
-        @if (!Loading()) {
-            <div class="card characters-card">
-                <div class="table-responsive" id="characters-table">
-                    <table class="table table-hover characters-table">
-                        <thead class="table-dark">
-                            <tr>
-                              <th scope="col">Avatar</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Species</th>
-                              <th scope="col">Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @for (character of characters(); track character.id) {
-                            <tr>
-                              <td>
-                                <img 
-                                  [ngSrc]="character.image" 
-                                  width="48" height="48"
-                                  [alt]="character.name" 
-                                  class="rounded-circle character-avatar">
-                              </td>
-                              <td>
-                                <a [routerLink]="['/character', character.id]" class="character-link">
-                                  {{ character.name }}
-                                </a>
-                              </td>
-                              <td class="text-muted">
-                                {{ character.species }}
-                              </td>
-                              <td>
-                                <div class="status-wrapper">
-                                  <span class="badge rounded-pill" 
-                                        [ngClass]="{'bg-primary': character.status === 'Alive', 'bg-danger': character.status === 'Dead', 'bg-secondary': character.status === 'unknown'}">
-                                    &nbsp;
-                                  </span>
-                                  <span class="text-muted">{{ character.status }}</span>
-                                </div>
-                              </td>
-                            </tr>
-                            }
-                          </tbody>
-                    </table>
-                </div>
-            </div>
-        }
-
+  <h1 class="mb-4 text-center">Character Dashboard</h1>
+  <div class="container-fluid dashboard-container">
+    <div class="input-group search-group">
+      <span class="input-group-text search-icon" id="search-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+      <input
+        type="text"
+        class="form-control search-input text-dark"
+        placeholder="Search characters..."
+        [value]="SearchTerm()"
+        (input)="OnSearch($event)"
+        aria-describedby="search-icon"
+      />
     </div>
+
+    @if (Loading()) {
+      <div class="loader-wrapper">
+        <div class="spinner-border loader-spinner" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    }
+
+    @if (!Loading()) {
+      <div class="card characters-card">
+        <div class="table-responsive" id="characters-table">
+          <table class="table table-hover characters-table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Avatar</th>
+                <th scope="col">Name</th>
+                <th scope="col">Species</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (character of characters(); track character.id) {
+                <tr>
+                  <td>
+                    <img
+                      [ngSrc]="character.image"
+                      width="48"
+                      height="48"
+                      [alt]="character.name"
+                      class="rounded-circle character-avatar"
+                    />
+                  </td>
+                  <td>
+                    <a [routerLink]="['/character', character.id]" class="character-link">
+                      {{ character.name }}
+                    </a>
+                  </td>
+                  <td class="text-muted">
+                    {{ character.species }}
+                  </td>
+                  <td>
+                    <div class="status-wrapper">
+                      <span
+                        class="badge rounded-pill"
+                        [ngClass]="{
+                          'bg-primary': character.status === 'Alive',
+                          'bg-danger': character.status === 'Dead',
+                          'bg-secondary': character.status === 'unknown',
+                        }"
+                      >
+                        &nbsp;
+                      </span>
+                      <span class="text-muted">{{ character.status }}</span>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    @if (!Loading() && totalPages() > 1) {
+      <nav class="mt-4" aria-label="Table pagination">
+        <ul class="pagination justify-content-center gap-2">
+          <li class="page-item" [class.disabled]="Page() === 1">
+            <button
+              class="page-link bg-card border-secondary text-dark rounded"
+              (click)="PreviousPage()"
+            >
+              Previous
+            </button>
+          </li>
+
+          @for (p of VisiblePages(); track p) {
+            <li class="page-item" [class.active]="Page() === p">
+              <button
+                class="page-link border-secondary rounded"
+                [ngClass]="
+                  Page() === p ? 'bg-primary text-dark border-primary' : 'bg-card text-dark'
+                "
+                (click)="Page.set(p)"
+              >
+                {{ p }}
+              </button>
+            </li>
+          }
+
+          <li class="page-item" [class.disabled]="Page() === totalPages()">
+            <button
+              class="page-link bg-card border-secondary text-dark rounded"
+              (click)="NextPage()"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+    }
+  </div>
 </div>
