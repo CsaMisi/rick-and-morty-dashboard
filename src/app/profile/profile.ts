@@ -3,6 +3,7 @@ import { CharacterService } from '../core/services/character.service';
 import { Character } from '../core/models/character.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ThemeService } from '../core/services/theme.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,7 @@ import { RouterLink } from '@angular/router';
 export class Profile implements OnChanges {
   @Input() id!:string
   private _characterService : CharacterService = inject(CharacterService)
+  ThemeService = inject(ThemeService);
 
   Character : WritableSignal<Character | null> = signal<Character | null>(null);
   Loading : WritableSignal<boolean> = signal<boolean>(true);

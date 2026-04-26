@@ -1,82 +1,96 @@
-<div class="min-vh-100 p-2 p-md-5">
-  <div class="container max-w-6xl mx-auto">
-    <a
-      routerLink="/"
-      class="btn btn-outline-secondary mb-4 d-inline-flex align-items-center gap-2 text-dark"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-      Back to Dashboard
-    </a>
+<div class="page-wrapper">
+  <div class="container-fluid" id="profile-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a
+        routerLink="/"
+        class="btn d-inline-flex align-items-center gap-2 theme-action-btn"
+        >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Dashboard
+      </a>
+
+      <div class="form-check form-switch d-flex align-items-center gap-2">
+        <input
+          class="form-check-input m-0"
+          style="cursor: pointer; width: 2.5rem; height: 1.25rem;"
+          type="checkbox"
+          role="switch"
+          id="darkModeSwitchProfile"
+          [checked]="ThemeService.IsDarkMode()"
+          (change)="ThemeService.ToggleDarkMode()"
+        />
+        <label class="form-check-label" for="darkModeSwitchProfile" style="cursor: pointer; user-select: none;">Dark Mode</label>
+      </div>
+    </div>
 
     @if (Loading()) {
-      <div class="d-flex justify-content-center py-5">
-        <div class="spinner-border text-primary" role="status">
+      <div class="loader-wrapper">
+        <div class="spinner-border loader-spinner" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
     }
 
     @if (Character(); as char) {
-      <div class="card bg-card border-secondary shadow-lg overflow-hidden">
-        <div class="row gx-2">
+      <div class="card shadow-lg theme-card">
+        <div class="row gx-0 h-100">
           <div class="col-md-4">
             <img
               [src]="char.image"
               [alt]="char.name"
-              class="img-fluid w-100 h-100"
-              style="object-fit: cover; min-height: 300px"
+              id="profile-image"
             />
           </div>
           <div class="col-md-8 p-4 p-md-5">
             <div class="row h-100 align-items-center">
               <div class="col-md-6 p-3">
                 <div class="d-flex flex-column align-items-start mb-5">
-                  <h2 class="text-primary display-6 fw-bold mb-3">{{ char.name }}</h2>
+                  <h2 class="display-6 fw-bold mb-3" id="profile-title">{{ char.name }}</h2>
                   <span
-                    class="badge rounded-pill fs-6"
-                    [ngClass]="{
-                      'bg-primary text-dark': char.status === 'Alive',
-                      'bg-danger': char.status === 'Dead',
-                      'bg-secondary': char.status === 'unknown',
-                    }"
+                    class="badge rounded-pill fs-6 status-badge"
+                    [class.alive]="char.status === 'Alive'"
+                    [class.dead]="char.status === 'Dead'"
+                    [class.unknown]="char.status === 'unknown'"
                   >
                     {{ char.status }}
                   </span>
                 </div>
 
+                <hr class="mb-4">
+
                 <div>
-                  <h5 class="text-dark border-bottom border-secondary pb-2 mb-4">Episodes</h5>
-                  <p class="text-muted mb-0">
+                  <h5 class="pb-2 mb-4" id="section-title">Episodes</h5>
+                  <p class="info-text mb-0">
                     Appears in <strong>{{ char.episode.length }}</strong> episode(s).
                   </p>
                 </div>
               </div>
               <div class="col-md-6 mt-5 mt-md-0 p-3">
-                <div class="text-dark">
+                <div class="profile-info">
                   <p class="mb-3">
-                    <strong class="text-muted me-2">Species:</strong> {{ char.species }}
+                    <strong class="info-label me-2">Species:</strong> {{ char.species }}
                   </p>
                   <p class="mb-3">
-                    <strong class="text-muted me-2">Gender:</strong> {{ char.gender }}
+                    <strong class="info-label me-2">Gender:</strong> {{ char.gender }}
                   </p>
                   <p class="mb-3">
-                    <strong class="text-muted me-2">Origin:</strong> {{ char.origin.name }}
+                    <strong class="info-label me-2">Origin:</strong> {{ char.origin.name }}
                   </p>
                   <p class="mb-3">
-                    <strong class="text-muted me-2">Location:</strong> {{ char.location.name }}
+                    <strong class="info-label me-2">Location:</strong> {{ char.location.name }}
                   </p>
                 </div>
               </div>
@@ -85,7 +99,7 @@
         </div>
       </div>
     } @else {
-      <div>No character found!</div>
+      <div class="no-character-found">No character found!</div>
     }
   </div>
 </div>

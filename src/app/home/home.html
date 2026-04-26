@@ -1,117 +1,159 @@
 <div class="d-flex vh-100 overflow-hidden">
-  <aside
-    class="bg-card border-end border-secondary d-none d-md-flex flex-column transition-all"
-    [ngStyle]="{ width: Sidebar.isOpen() ? '260px' : '80px', transition: 'width 0.3s ease' }"
-  >
-    <div
-      class="p-3 d-flex align-items-center"
-      [ngClass]="Sidebar.isOpen() ? 'justify-content-between' : 'justify-content-center'"
-    >
-      @if (Sidebar.isOpen()) {
-        <h5 class="m-0 text-primary fw-bold text-truncate">Rick & Morty</h5>
-      }
-
-      <button
-        class="btn btn-sm btn-outline-secondary border-0 text-dark"
-        (click)="Sidebar.ToggleSidebar()"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-
-    <hr class="border-secondary m-0" />
-
-    <ul class="nav nav-pills flex-column p-3 gap-2">
-      <li class="nav-item">
-        <a
-          routerLink="/"
-          class="nav-link text-light d-flex align-items-center gap-3"
-          routerLinkActive="bg-primary text-dark fw-medium"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect x="3" y="3" width="7" height="9"></rect>
-            <rect x="14" y="3" width="7" height="5"></rect>
-            <rect x="14" y="12" width="7" height="9"></rect>
-            <rect x="3" y="16" width="7" height="5"></rect>
-          </svg>
-          @if (Sidebar.isOpen()) {
-            <span>Dashboard</span>
-          }
-        </a>
-      </li>
-    </ul>
-
-    <hr class="border-secondary m-0" />
-
-    <div class="p-3 flex-grow-1 overflow-auto">
-      @if (Sidebar.isOpen()) {
-        <h6 class="text-muted text-uppercase fw-bold mb-3" style="font-size: 0.75rem">
-          Recently Viewed
-        </h6>
-      }
-
-      @if (RecentlyViewed.recent().length > 0) {
-        <ul class="nav nav-pills flex-column gap-2">
-          @for (character of RecentlyViewed.recent(); track character.id) {
-            <li class="nav-item">
-              <a
-                [routerLink]="['/character', character.id]"
-                class="nav-link text-dark d-flex align-items-center gap-3 p-2"
-              >
-                <img
-                  [src]="character.image"
-                  [alt]="character.name"
-                  class="rounded-circle border border-secondary"
-                  width="32"
-                  height="32"
-                  style="object-fit: cover"
-                />
-                @if (Sidebar.isOpen()) {
-                  <span class="text-truncate">{{ character.name }}</span>
-                }
-              </a>
-            </li>
-          }
-        </ul>
-      }
-    </div>
-  </aside>
-
   <main class="flex-grow-1 d-flex flex-column overflow-hidden h-100">
-    <nav class="navbar navbar-dark bg-card border-bottom border-secondary d-md-none px-3 shadow-sm">
-      <button class="navbar-toggler border-0" type="button" (click)="Sidebar.ToggleMobileSidebar()">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-
     <div class="flex-grow-1 overflow-auto p-4 p-md-5">
       <div class="container-fluid max-w-7xl mx-auto">
-        <router-outlet></router-outlet>
+        <div class="page-wrapper">
+          <h1 class="mb-4 text-center">Character Dashboard</h1>
+          <div class="container-fluid dashboard-container">
+            <div class="input-group search-group">
+              <span class="input-group-text search-icon " id="search-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                id="search-input"
+                placeholder="Search characters..."
+                [value]="SearchTerm()"
+                (input)="OnSearch($event)"
+                aria-describedby="search-icon"
+              />
+            </div>
+
+            <div class="card characters-card theme-card" style="min-height: 400px">
+              @if (Loading()) {
+                <div
+                  class="loader-wrapper d-flex align-items-center justify-content-center h-100"
+                  style="min-height: 400px"
+                >
+                  <div class="spinner-border loader-spinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              } @else {
+                <div class="table-responsive" id="characters-table">
+                  <table class="table table-hover characters-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Avatar</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Species</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (character of characters(); track character.id) {
+                        <tr>
+                          <td>
+                            <img
+                              [ngSrc]="character.image"
+                              width="48"
+                              height="48"
+                              [alt]="character.name"
+                              class="rounded-circle character-avatar"
+                            />
+                          </td>
+                          <td>
+                            <a [routerLink]="['/character', character.id]" class="character-link">
+                              {{ character.name }}
+                            </a>
+                          </td>
+                          <td class="character-link">
+                            {{ character.species }}
+                          </td>
+                          <td>
+                            <div class="status-wrapper">
+                              <span
+                                  class="badge rounded-pill status-badge"
+                                  [class.alive]="character.status === 'Alive'"
+                                  [class.dead]="character.status === 'Dead'"
+                                  [class.unknown]="character.status === 'unknown'"
+                              >
+                                &nbsp;
+                              </span>
+                                <span>{{ character.status }}</span>
+                            </div>
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
+            </div>
+
+          <div class="d-flex align-items-center justify-content-center mt-4 position-relative">
+            <div class="form-check form-switch d-flex align-items-center gap-2 position-absolute start-0">
+                <input
+                class="form-check-input m-0"
+                style="cursor: pointer; width: 2.5rem; height: 1.25rem;"
+                  type="checkbox"
+                role="switch"
+                  id="darkModeSwitch"
+                [checked]="ThemeService.IsDarkMode()"
+                (change)="ThemeService.ToggleDarkMode()"
+                />
+              <label class="form-check-label" for="darkModeSwitch" style="cursor: pointer; user-select: none;">Dark Mode</label>
+              </div>
+
+              @if (totalPages() > 1) {
+              <nav aria-label="Table pagination" class="mx-auto">
+                <ul class="pagination mb-0 justify-content-center gap-2">
+                    <li class="page-item" [class.disabled]="Page() === 1 || Loading()">
+                      <button
+                        class="page-link theme-action-btn rounded"
+                        (click)="PreviousPage()"
+                        [disabled]="Loading()"
+                      >
+                        Previous
+                      </button>
+                    </li>
+
+                    @for (p of VisiblePages(); track p) {
+                      <li
+                        class="page-item"
+                        [class.active]="Page() === p"
+                        [class.disabled]="Loading()"
+                      >
+                        <button
+                          class="page-link theme-action-btn border-secondary rounded"
+                          [class.active-page]="Page() === p"
+                          (click)="Page.set(p)"
+                          [disabled]="Loading()"
+                        >
+                          {{ p }}
+                        </button>
+                      </li>
+                    }
+
+                    <li class="page-item" [class.disabled]="Page() === totalPages() || Loading()">
+                      <button
+                        class="page-link theme-action-btn rounded"
+                        (click)="NextPage()"
+                        [disabled]="Loading()"
+                      >
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              }
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>

@@ -1,1 +1,98 @@
 @use 'bootstrap/scss/bootstrap';
+
+
+:root {
+  --bg-primary: #ffffff;
+  --text-primary: #212529;
+  --card-bg: #f8f9fa;
+  --border-color: #dee2e6;
+  --theme-primary: #0d6efd; 
+  --theme-primary-text: #ffffff;
+
+  --action-disabled-bg: var(--card-bg);
+  --action-disabled-color: var(--text-primary);
+  --action-disabled-border: var(--border-color);
+  --action-disabled-opacity: 0.5;
+}
+
+body.dark-theme {
+  --bg-primary: #121212;
+  --text-primary: #07ca48;
+  --card-bg: #1e1e1e;
+  --border-color: #343a40;
+  --theme-primary: #07ca48; 
+  --theme-primary-text: #000000; 
+ 
+  --action-disabled-bg: #2a2a2a; 
+  --action-disabled-color: #047a2b; 
+  --action-disabled-border: #2a2a2a;
+  --action-disabled-opacity: 1; 
+}
+
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+
+.page-wrapper {
+  min-height: 100vh;
+  padding: 1.5rem;
+  
+  @media (min-width: 768px) {
+    padding: 3rem;
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
+
+.loader-spinner {
+  color: var(--theme-primary);
+}
+
+.theme-card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.status-badge {
+  &.alive { background-color: var(--theme-primary); color: var(--theme-primary-text); }
+  &.dead { background-color: #dc3545; color: #ffffff; }
+  &.unknown { background-color: #6c757d; color: #ffffff; }
+}
+
+.theme-action-btn {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--theme-primary);
+    color: var(--theme-primary-text);
+    border-color: var(--theme-primary);
+  }
+
+  &:disabled,
+  .page-item.disabled > & {
+    background-color: var(--action-disabled-bg);
+    color: var(--action-disabled-color);
+    border-color: var(--action-disabled-border);
+    opacity: var(--action-disabled-opacity);
+  }
+}
+
+.theme-action-btn.active-page {
+  background-color: var(--theme-primary);
+  color: var(--theme-primary-text);
+  border-color: var(--theme-primary);
+}
