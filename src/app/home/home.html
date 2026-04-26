@@ -1,6 +1,15 @@
-<div class="min-vh-100 p-4 p-md-5">
-  <div class="container-fluid max-w-7xl mx-auto">
-    <h1 class="mb-4 text-primary">Rick and Morty Character Database</h1>
-    <app-dashboard/>
-  </div>
+<div class="flex-grow-1 overflow-auto">
+    <main class="flex-grow-1 d-flex flex-column overflow-hidden h-100">
+    <!-- Top Navbar for Mobile Toggle -->
+    <nav class="navbar navbar-dark bg-card border-bottom border-secondary d-md-none px-3 shadow-sm">
+      <button class="navbar-toggler border-0" type="button"> <!-- TODO: sidebar toggle  -->
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <!-- Router Outlet (Loads Dashboard or Character Profile) -->
+    <div class="flex-grow-1 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>
