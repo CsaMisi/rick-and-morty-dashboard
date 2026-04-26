@@ -1,4 +1,5 @@
 <div class="dashboard-wrapper">
+            <h1 class="mb-4 text-center">Character Dashboard</h1>
     <div class="container-fluid dashboard-container">
         
         <div class="input-group search-group">
@@ -10,7 +11,7 @@
           </span>
           <input 
             type="text" 
-            class="form-control search-input" 
+            class="form-control search-input text-dark" 
             placeholder="Search characters..." 
             [value]="SearchTerm()"
             (input)="OnSearch($event)"

@@ -7,7 +7,7 @@ import { Sign } from "crypto";
 })
 
 export class SidebarService{
-    readonly isOpen : WritableSignal<boolean> = signal<boolean>(true);
+    readonly isOpen : WritableSignal<boolean> = signal<boolean>(false);
     readonly mobileIsOpen : WritableSignal<boolean> = signal<boolean>(false); //Default to desktop
 
     readonly state : Signal<"open" | "closed"> = computed(()=> this.isOpen() ? 'open' : 'closed')

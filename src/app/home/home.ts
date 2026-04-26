@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DashboardComponent } from "../dashboard/dashboard";
-import { RouterOutlet } from "@angular/router";
+import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { SidebarService } from '../core/services/sidebar.service';
+import { NgClass, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterOutlet],
+  imports: [NgStyle, NgClass, RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {}
+export class Home {
+  Sidebar : SidebarService = inject(SidebarService);
+
+}
