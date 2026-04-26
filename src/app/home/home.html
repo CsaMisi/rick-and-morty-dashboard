@@ -70,43 +70,41 @@
 
     <div class="p-3 flex-grow-1 overflow-auto">
       @if (Sidebar.isOpen()) {
-        <h6 class="text-muted text-uppercase fw-bold mb-3" style="font-size: 0.75rem;">Recently Viewed</h6>
+        <h6 class="text-muted text-uppercase fw-bold mb-3" style="font-size: 0.75rem">
+          Recently Viewed
+        </h6>
       }
-      <ul class="nav nav-pills flex-column gap-2">
-        <li class="nav-item">
-            <!--TODO: Placeholders for now, will implement with profiles page-->
-          <a routerLink="/character/1" class="nav-link text-dark d-flex align-items-center gap-3 p-2">
-            <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="Rick Sanchez" class="rounded-circle border border-secondary" width="32" height="32" style="object-fit: cover;">
-            @if (Sidebar.isOpen()) {
-              <span class="text-truncate">Rick Sanchez</span>
-            }
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/character/2" class="nav-link text-dark d-flex align-items-center gap-3 p-2">
-            <img src="https://rickandmortyapi.com/api/character/avatar/2.jpeg" alt="Morty Smith" class="rounded-circle border border-secondary" width="32" height="32" style="object-fit: cover;">
-            @if (Sidebar.isOpen()) {
-              <span class="text-truncate">Morty Smith</span>
-            }
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/character/3" class="nav-link text-dark d-flex align-items-center gap-3 p-2">
-            <img src="https://rickandmortyapi.com/api/character/avatar/3.jpeg" alt="Summer Smith" class="rounded-circle border border-secondary" width="32" height="32" style="object-fit: cover;">
-            @if (Sidebar.isOpen()) {
-              <span class="text-truncate">Summer Smith</span>
-            }
-          </a>
-        </li>
-      </ul>
+
+      @if (RecentlyViewed.recent().length > 0) {
+        <ul class="nav nav-pills flex-column gap-2">
+          @for (character of RecentlyViewed.recent(); track character.id) {
+            <li class="nav-item">
+              <a
+                [routerLink]="['/character', character.id]"
+                class="nav-link text-dark d-flex align-items-center gap-3 p-2"
+              >
+                <img
+                  [src]="character.image"
+                  [alt]="character.name"
+                  class="rounded-circle border border-secondary"
+                  width="32"
+                  height="32"
+                  style="object-fit: cover"
+                />
+                @if (Sidebar.isOpen()) {
+                  <span class="text-truncate">{{ character.name }}</span>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      }
     </div>
   </aside>
 
   <main class="flex-grow-1 d-flex flex-column overflow-hidden h-100">
-   
     <nav class="navbar navbar-dark bg-card border-bottom border-secondary d-md-none px-3 shadow-sm">
       <button class="navbar-toggler border-0" type="button" (click)="Sidebar.ToggleMobileSidebar()">
-        <!-- TODO: sidebar toggle  -->
         <span class="navbar-toggler-icon"></span>
       </button>
     </nav>
