@@ -1,7 +1,7 @@
 import { Component, computed, inject, PLATFORM_ID, Signal, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
-import { CommonModule, isPlatformServer, NgClass, NgOptimizedImage } from '@angular/common';
+import { CommonModule, isPlatformServer, NgOptimizedImage } from '@angular/common';
 
 import { CharacterService } from '../core/services/character.service';
 import { ThemeService } from '../core/services/theme.service';
@@ -11,7 +11,7 @@ import { Character } from '../core/models/character.model';
 
 @Component({
   selector: 'app-home',
-  imports: [NgClass, CommonModule, RouterLink, NgOptimizedImage],
+  imports: [CommonModule, RouterLink, NgOptimizedImage],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

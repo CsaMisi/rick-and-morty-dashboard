@@ -37,6 +37,7 @@ Run `npm start` or `ng serve` for a dev server.
 
 ### TODO
 - **Testing:** Using either Vitest or Karma with Jasmine, unit and integration tests should be written, on at least the component leve, and for the services. UI tests with Selenium could be considered, but at this scale, there isnt really much UI to be tested with such a resource heavy tool.
+- **Potential Bug**: when launching with ng serve on my laptop, before it was able to fetch a single character it needed a refresh. This only occured on first startup, and i was not able to reproduce the issue on any other device. The problem onyl occured on firefox, i was not able to reproduce on chromium
 
 ### Extra branch
 Theres a feature/sidebar-localstorage named branch, that contains some extras I've toyed around with during development. On the topic of branches you might see direct commits to release and master. In a prod setting i would not do that, and even if the policies were bad enough to let me do that, they would be reverted immedialty.
